@@ -1,0 +1,18 @@
+- icon: "{ }"
+  title: System & software development
+  text: Custom business systems, internal tools and integrations built around how your organisation actually works.
+- icon: "⚙"
+  title: System administration & maintenance
+  text: Linux and Windows servers kept patched, monitored, backed up and secure — with clear documentation you own.
+- icon: "⌁"
+  title: Infrastructure & networks
+  text: Planning, installing and troubleshooting networks, servers and on-site IT facilities, for one site or many.
+- icon: "✉"
+  title: Email, web & hosting
+  text: Business email on your own domain with proper SPF, DKIM and DMARC, plus secure websites and application hosting.
+- icon: "✚"
+  title: Healthcare IT & biomedical support
+  text: IT for clinics and hospitals, informed by real experience as a hospital IT manager and biomedical engineer.
+- icon: "◎"
+  title: IT management & consulting
+  text: Interim or outsourced IT management, technology planning, vendor coordination and knowledge transfer to your team.

@@ -1,0 +1,73 @@
+{{ define "main" }}
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">{{ .Params.eyebrow }}</p>
+    <h1>{{ .Params.heading }}</h1>
+    <p class="lede">{{ .Params.lede }}</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#contact">Start a conversation</a>
+      <a class="btn btn-ghost" href="#services">Explore services</a>
+    </div>
+    <ul class="sectors" aria-label="Sectors served">{{ range .Params.sectors }}<li>{{ . }}</li>{{ end }}</ul>
+  </div>
+</section>
+
+<section id="services" class="section">
+  <div class="wrap">
+    <p class="kicker">Services</p>
+    <h2>Everything your IT needs, from one accountable partner</h2>
+    <ul class="grid">
+      {{- range hugo.Data.services }}
+      <li class="card"><span class="icon" aria-hidden="true">{{ .icon }}</span><h3>{{ .title }}</h3><p>{{ .text }}</p></li>
+      {{- end }}
+    </ul>
+  </div>
+</section>
+
+<section id="experience" class="section alt">
+  <div class="wrap">
+    <p class="kicker">Experience</p>
+    <h2>Years of running IT where it matters</h2>
+    <p class="section-lede">Before founding Vangera Systems, its founder held IT, engineering and facility roles with organisations across Laos:</p>
+    <ul class="roles">
+      {{- range hugo.Data.roles }}
+      <li><h3>{{ .org }}{{ with .note }} <small>{{ . }}</small>{{ end }}</h3><p>{{ .role }}</p></li>
+      {{- end }}
+    </ul>
+    <p class="note">Listed organisations are past employers of the founder, not clients or endorsements.</p>
+  </div>
+</section>
+
+<section id="process" class="section">
+  <div class="wrap">
+    <p class="kicker">How I work</p>
+    <h2>Simple, transparent, and built to last</h2>
+    <ol class="steps">
+      {{- range hugo.Data.steps }}
+      <li><h3>{{ .title }}</h3><p>{{ .text }}</p></li>
+      {{- end }}
+    </ol>
+  </div>
+</section>
+
+<section id="about" class="section alt">
+  <div class="wrap about">
+    <div>
+      <p class="kicker">About</p>
+      <h2>{{ .Params.about_heading }}</h2>
+    </div>
+    <div class="prose">
+      {{ .Content }}
+      <p><a href="{{ site.Params.founder }}">Read more about Lohn's background →</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section contact">
+  <div class="wrap">
+    <h2>Let's talk about your project</h2>
+    <p>Tell me what you need — a new system, a server that needs care, or an IT department that needs a hand. Or email <a href="mailto:{{ site.Params.email }}">{{ site.Params.email }}</a>.</p>
+    {{ partial "contact-form.html" . }}
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,14 @@
+baseURL = "https://www.vangera.systems/"
+locale = "en"
+title = "Vangera Systems"
+disableKinds = ["taxonomy", "term", "rss"]
+enableRobotsTXT = true
+timeZone = "Asia/Vientiane"
+
+[params]
+  description = "Vangera Systems is a software house and IT services company in Laos: custom system development, system administration and maintenance, infrastructure, hosting and IT management."
+  email = "info@vangera.systems"
+  founder = "https://www.lohn.cc/"
+
+[markup.goldmark.renderer]
+  unsafe = false
