@@ -141,3 +141,22 @@ altcha-widget { --altcha-max-width: 300px; }
 .page h1 { font-size: clamp(30px, 4.4vw, 46px); margin: 0 0 20px; }
 .page .prose { max-width: 70ch; }
 .prose h2 { font-size: 24px; margin: 1.6em 0 .5em; max-width: none; }
+
+/* Founder's track record (data from www.lohn.cc/profile.json) */
+.founder-line { margin: 18px 0 0; color: #c5cde3; font-size: 15px; }
+.tr-stats { list-style: none; padding: 0; margin: 0 0 40px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.tr-stats li { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: grid; gap: 2px; }
+.tr-val { font-size: 34px; font-weight: 800; color: var(--navy); line-height: 1.1; }
+@media (prefers-color-scheme: dark) { .tr-val { color: var(--amber); } }
+.tr-lbl { color: var(--muted); font-size: 14.5px; }
+.tr-h { font-size: 20px; margin: 40px 0 16px; }
+.tr-sectors { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.tr-sectors li { display: inline-flex; flex-direction: column; padding: 10px 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; font-size: 15px; }
+.tr-sectors span { color: var(--muted); font-size: 13.5px; }
+.tr-tag { margin: 0 0 8px !important; color: #c27c0e !important; font-weight: 700; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
+@media (prefers-color-scheme: dark) { .tr-tag { color: var(--amber) !important; } }
+.tr-org { font-weight: 600; color: var(--ink) !important; margin: -2px 0 8px !important; font-size: 15px; }
+.roles small { color: var(--muted); font-size: 13.5px; }
+.tr-training { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+.tr-training li { color: var(--muted); }
+.tr-training strong { color: var(--ink); }

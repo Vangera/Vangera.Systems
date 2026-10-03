@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Daily rebuild at 05:30 Laos time so the founder's track record picks up CV changes
+  # published at https://www.lohn.cc/profile.json.
+  schedule:
+    - cron: "30 22 * * *"
 
 # Never run two deploys at once; later pushes wait for the running deploy.
 concurrency:

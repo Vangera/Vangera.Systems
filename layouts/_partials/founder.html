@@ -1,0 +1,14 @@
+{{- /* Founder profile fetched at build time from www.lohn.cc/profile.json (schema v1).
+       The build fails loudly if it can't be fetched, so a broken feed never publishes an empty section. */ -}}
+{{- $p := dict -}}
+{{- with try (resources.GetRemote site.Params.profileURL) -}}
+  {{- with .Err -}}
+    {{- errorf "founder profile: cannot fetch %s: %s" site.Params.profileURL . -}}
+  {{- else with .Value -}}
+    {{- $p = . | transform.Unmarshal -}}
+  {{- else -}}
+    {{- errorf "founder profile: %s returned no content" site.Params.profileURL -}}
+  {{- end -}}
+{{- end -}}
+{{- if ne (index $p "schema") 1 }}{{ errorf "founder profile: unsupported schema %v" (index $p "schema") }}{{ end -}}
+{{- return $p -}}
