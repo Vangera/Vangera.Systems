@@ -20,7 +20,7 @@
     <h2>Everything your IT needs, from one accountable partner</h2>
     <ul class="grid">
       {{- range hugo.Data.services }}
-      <li class="card"><span class="icon" aria-hidden="true">{{ .icon }}</span><h3>{{ .title }}</h3><p>{{ .text }}</p></li>
+      <li class="card"><span class="svc-icon">{{ partial "icon.html" .icon }}</span><h3>{{ .title }}</h3><p>{{ .text }}</p></li>
       {{- end }}
     </ul>
   </div>
@@ -97,7 +97,7 @@
     </div>
     <div class="prose">
       {{ .Content }}
-      <p><a href="{{ site.Params.founder }}">Read more about Lohn's background →</a></p>
+      <p><a class="more-link" href="{{ site.Params.founder }}">Read more about Lohn's background {{ partial "icon.html" "arrow-right" }}</a></p>
     </div>
   </div>
 </section>
