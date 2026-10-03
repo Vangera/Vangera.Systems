@@ -1,4 +1,5 @@
 {{ define "main" }}
+{{- $f := partial "founder.html" . -}}
 <section class="hero">
   <div class="wrap">
     <p class="eyebrow">{{ .Params.eyebrow }}</p>
@@ -9,6 +10,7 @@
       <a class="btn btn-ghost" href="#services">Explore services</a>
     </div>
     <ul class="sectors" aria-label="Sectors served">{{ range .Params.sectors }}<li>{{ . }}</li>{{ end }}</ul>
+    <p class="founder-line">Founded by {{ $f.person.name }} ({{ $f.person.nickname }}) · {{ $f.summary.years }} years in IT &amp; facilities · {{ $f.summary.organisations }} organisations · {{ len $f.sectors }} sectors</p>
   </div>
 </section>
 
@@ -26,15 +28,52 @@
 
 <section id="experience" class="section alt">
   <div class="wrap">
-    <p class="kicker">Experience</p>
-    <h2>Years of running IT where it matters</h2>
-    <p class="section-lede">Before founding Vangera Systems, its founder held IT, engineering and facility roles with organisations across Laos:</p>
-    <ul class="roles">
-      {{- range hugo.Data.roles }}
-      <li><h3>{{ .org }}{{ with .note }} <small>{{ . }}</small>{{ end }}</h3><p>{{ .role }}</p></li>
+    <p class="kicker">Founder's track record</p>
+    <h2>{{ $f.summary.years }} years of running IT where it matters</h2>
+    <p class="section-lede">Vangera Systems is backed by the founder's hands-on career since {{ $f.summary.since }} — IT, engineering and facility roles across hospitality, healthcare, industry and research in Laos.</p>
+
+    <ul class="tr-stats">
+      <li><span class="tr-val">{{ $f.summary.years }}</span><span class="tr-lbl">years in IT &amp; facilities</span></li>
+      <li><span class="tr-val">{{ $f.summary.organisations }}</span><span class="tr-lbl">organisations</span></li>
+      <li><span class="tr-val">{{ $f.summary.roles }}</span><span class="tr-lbl">roles held</span></li>
+      <li><span class="tr-val">{{ len $f.sectors }}</span><span class="tr-lbl">sectors</span></li>
+    </ul>
+
+    <h3 class="tr-h">Experience by sector</h3>
+    <ul class="tr-sectors">
+      {{- range $f.sectors }}
+      <li><strong>{{ .name }}</strong><span>{{ .years }} yrs · {{ .roles }} {{ cond (eq .roles 1.0) "role" "roles" }}</span></li>
       {{- end }}
     </ul>
-    <p class="note">Listed organisations are past employers of the founder, not clients or endorsements.</p>
+
+    <h3 class="tr-h">Selected work</h3>
+    <ul class="grid">
+      {{- range $f.projects }}
+      <li class="card"><p class="tr-tag">{{ .tag }}</p><h3>{{ .title }}</h3>{{ with .org }}<p class="tr-org">{{ . }}</p>{{ end }}<p>{{ .text }}</p></li>
+      {{- end }}
+    </ul>
+
+    <h3 class="tr-h">Where the founder has worked</h3>
+    <ul class="roles">
+      {{- range where $f.positions "start_year" "ge" 2010 }}
+      {{- if ne .org "Self-Employed" }}
+      <li><h3>{{ .org }}</h3><p>{{ .role }}<br><small>{{ .period }} · {{ .sector }}</small></p></li>
+      {{- end }}
+      {{- end }}
+    </ul>
+
+    {{- $training := slice }}
+    {{- range $f.training }}{{ if ge (int (index (findRE `\d{4}` .year) 0)) 2005 }}{{ $training = $training | append . }}{{ end }}{{ end }}
+    {{- with $training }}
+    <h3 class="tr-h">Specialist training</h3>
+    <ul class="tr-training">
+      {{- range . }}
+      <li><strong>{{ .title }}</strong> — {{ .provider }}, {{ .location }} ({{ .year }})</li>
+      {{- end }}
+    </ul>
+    {{- end }}
+
+    <p class="note">Listed organisations are past employers of the founder, not clients or endorsements. Full CV: <a href="{{ $f.person.url }}">{{ strings.TrimSuffix "/" (strings.TrimPrefix "https://" $f.person.url) }}</a>.</p>
   </div>
 </section>
 

@@ -9,6 +9,16 @@ timeZone = "Asia/Vientiane"
   description = "Vangera Systems is a software house and IT services company in Laos: custom system development, system administration and maintenance, infrastructure, hosting and IT management."
   email = "info@vangera.systems"
   founder = "https://www.lohn.cc/"
+  # Founder CV data — single source of truth lives in the lohn.cc repo (data/*.yaml → /profile.json).
+  profileURL = "https://www.lohn.cc/profile.json"
 
 [markup.goldmark.renderer]
   unsafe = false
+
+# Always fetch a fresh profile.json (no local caching of remote resources).
+[caches.getresource]
+  maxAge = 0
+
+# Only allow remote fetches from the founder's site.
+[security.http]
+  urls = ['^https://www\.lohn\.cc/']

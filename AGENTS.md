@@ -33,19 +33,12 @@ testimonials, numbers ("100+ projects", "99.9% uptime"), years in business, cert
 office addresses, phone numbers, or awards. If a section needs a fact you don't have, leave a clearly marked TODO
 and ask the owner.
 
-Founder's past roles (most recent first, order still to be confirmed):
+The founder is **Nakhonekham (Lohn) Xongmixay**, based in Vientiane. His career data (roles, employers, years,
+projects, training) comes **only** from `https://www.lohn.cc/profile.json` — see section 4b. Pre-opening hotel
+experience applies to **Avani+ Lanexang Vientiane** only.
 
-| Organisation | Role |
-|---|---|
-| A children's hospital (name not yet given) | IT Manager & Biomedical Engineer |
-| Everlao (Everbright Headwear, China — spelling to confirm) | IT Supervisor — IT facilities + process tracking across 3 factories |
-| Avani+ Luang Prabang, Pullman Luang Prabang, Avani+ Lanexang Vientiane | IT Manager — hotel properties in two cities |
-| Institut Pasteur du Laos | IT Manager & Facility Manager |
-| Lao Tobacco | IT Executive |
-| Eyetech Security Systems | Product Engineer — knowledge transfer from Robert Bosch Thailand to Laos |
-
-**Legal/honesty rule:** these are the founder's **past employers, not clients**. Always keep the note
-"Listed organisations are past employers of the founder, not clients or endorsements." Never display their logos
+**Legal/honesty rule:** organisations in the founder's history are **past employers, not clients**. Always keep the
+note "Listed organisations are past employers of the founder, not clients or endorsements." Never display their logos
 or imply they endorse Vangera Systems.
 
 Open questions to ask the owner: business registration/legal name, city/address to show, phone/WhatsApp,
@@ -87,7 +80,7 @@ This means:
 | Site config | `hugo.toml` |
 | Hero eyebrow/headline/lede, sectors, About heading + text | `content/_index.md` |
 | Services | `data/services.yaml` |
-| Founder's past roles | `data/roles.yaml` |
+| Founder's track record (years, sectors, projects, employers, training) | **Not in this repo** — fetched at build time from `https://www.lohn.cc/profile.json` by `layouts/_partials/founder.html` |
 | "How I work" steps | `data/steps.yaml` |
 | Privacy policy | `content/privacy.md` |
 | Form result pages | `content/contact/thanks.md`, `content/contact/error.md` |
@@ -101,6 +94,20 @@ Header, hero, contact and footer are always navy; content sections switch betwee
 
 Possible future pages (only when the owner asks): individual service pages (`content/services/<slug>.md`),
 case studies (only real, approved ones), a Lao-language version (Hugo multilingual).
+
+## 4b. Founder data comes from lohn.cc — do not duplicate it
+
+The founder's CV lives only in the **lohn.cc** repo (`data/*.yaml`), published as `https://www.lohn.cc/profile.json`
+(schema v1). This site fetches it at build time (`layouts/_partials/founder.html`) and renders the
+"Founder's track record" section. Rules:
+- Never copy CV facts (years, employers, projects, training) into this repo — change them in lohn.cc instead.
+- Never hard-code computed numbers (years, organisation count); use `$f.summary.*` / `$f.sectors`.
+- The build **fails on purpose** if profile.json can't be fetched or has an unknown schema — fix the feed, don't
+  add a silent fallback.
+- Remote fetches are restricted to `^https://www\.lohn\.cc/` (`[security.http]` in hugo.toml).
+- The workflow also rebuilds daily at 05:30 Laos time (cron) so CV updates appear without a push here.
+- Keep the note that listed organisations are past employers of the founder, not clients or endorsements.
+- Local preview needs internet access (it fetches the live profile.json).
 
 ## 5. Contact form — do not break this contract
 
