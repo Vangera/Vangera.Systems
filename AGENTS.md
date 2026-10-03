@@ -61,7 +61,7 @@ pricing or packages (if any), real client projects that may be named, years of e
   Do **not** create `layouts/_default/` or `layouts/partials/` (old layout).
 - Use current APIs: `hugo.Data` (not `.Site.Data`), `site.Language.Locale`, `locale` in config.
 - CI builds with `hugo --gc --minify --panicOnWarning` — **any Hugo warning fails the deploy**.
-- Plain CSS in `static/styles.css` with CSS custom properties; light + dark mode via `prefers-color-scheme`.
+- Plain CSS in `assets/styles.css` (fingerprinted via `resources.Get`) with CSS custom properties; light + dark mode via `prefers-color-scheme`.
 - System font stacks only — **no web fonts, no Google Fonts, no external CDNs**.
 - **No ads, no affiliate links, no analytics or trackers** on this site. It's a professional services site.
 
@@ -74,7 +74,7 @@ object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 
 
 This means:
 - **No inline `<script>`** blocks or `onclick=` handlers. All JS goes in files under `static/js/`.
-- **No inline `style="…"` attributes** and no `<style>` blocks. All CSS goes in `static/styles.css`.
+- **No inline `style="…"` attributes** and no `<style>` blocks. All CSS goes in `assets/styles.css`.
   (Presentation attributes inside inline SVG, like `fill=`, are fine.)
 - **No external resources** (scripts, styles, fonts, images, iframes, maps, video embeds, chat widgets).
   Images must be committed to the repo (`static/images/`) — prefer WebP/AVIF/SVG, always set width/height and `alt`.
@@ -93,7 +93,7 @@ This means:
 | Form result pages | `content/contact/thanks.md`, `content/contact/error.md` |
 | Page frame / head / header / footer | `layouts/baseof.html`, `layouts/_partials/*.html` |
 | Home page sections | `layouts/home.html` |
-| Styles | `static/styles.css` |
+| Styles | `assets/styles.css` — Hugo fingerprints it (`styles.<hash>.css`) so browsers never use a stale copy; never link it by a fixed URL |
 
 Brand: navy `#0b1530` / `#13214a`, amber accent `#f5a524`, link blue `#1d4ed8`; bold sans-serif headings;
 "V" chevron logo (inline SVG in `layouts/_partials/header.html`, favicon in `static/favicon.svg`); radius 16px.

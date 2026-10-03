@@ -10,4 +10,6 @@
 <meta property="og:url" content="{{ .Permalink }}">
 <meta name="theme-color" content="#0b1530">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/styles.css">
+{{- with resources.Get "styles.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{- end }}
