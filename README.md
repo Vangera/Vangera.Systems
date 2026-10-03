@@ -10,7 +10,7 @@ Company site of Vangera Systems — built with [Hugo](https://gohugo.io), deploy
 | Founder experience | `data/roles.yaml` |
 | How I work steps | `data/steps.yaml` |
 | Privacy policy | `content/privacy.md` |
-| Styles | `static/styles.css` |
+| Styles | `assets/styles.css` (fingerprinted at build: `styles.<hash>.css`) |
 
 ## Preview locally
 ```bash
