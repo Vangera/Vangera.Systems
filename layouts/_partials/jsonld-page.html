@@ -1,0 +1,29 @@
+{{- /*
+  schema.org data for pages other than the home page: a BreadcrumbList, and — when front matter sets
+  `schema_type` (e.g. "TechArticle" for a guide) — the article itself, written by the founder and
+  published by Vangera Systems (same @ids as jsonld-org.html and www.lohn.cc).
+*/ -}}
+{{- $orgID := printf "%s#organization" site.BaseURL -}}
+{{- $graph := slice (dict
+    "@type" "BreadcrumbList"
+    "itemListElement" (slice
+      (dict "@type" "ListItem" "position" 1 "name" "Home" "item" site.BaseURL)
+      (dict "@type" "ListItem" "position" 2 "name" .Title)
+    )
+) -}}
+{{- with .Params.schema_type -}}
+  {{- $article := dict
+      "@type" .
+      "@id" (printf "%s#article" $.Permalink)
+      "headline" $.Title
+      "description" ($.Description | default site.Params.description)
+      "url" $.Permalink
+      "mainEntityOfPage" (dict "@type" "WebPage" "@id" $.Permalink)
+      "inLanguage" site.Language.Locale
+      "author" (dict "@type" "Person" "@id" (printf "%s#person" site.Params.founder) "url" site.Params.founder)
+      "publisher" (dict "@id" $orgID)
+  -}}
+  {{- if not $.Lastmod.IsZero }}{{ $article = merge $article (dict "dateModified" ($.Lastmod.Format "2006-01-02T15:04:05Z07:00")) }}{{ end -}}
+  {{- $graph = $graph | append $article -}}
+{{- end -}}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}</script>

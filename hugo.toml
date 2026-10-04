@@ -11,6 +11,9 @@ timeZone = "Asia/Vientiane"
   founder = "https://www.lohn.cc/"
   # Founder CV data — single source of truth lives in the lohn.cc repo (data/*.yaml → /profile.json).
   profileURL = "https://www.lohn.cc/profile.json"
+  # Google AdSense publisher: only the site-verification <meta> tag (static/ads.txt lists the same ID).
+  # No ad code is loaded — see AGENTS.md before changing that.
+  adsenseClient = "ca-pub-8408966451102848"
 
 [markup.goldmark.renderer]
   unsafe = false

@@ -1,0 +1,47 @@
+{{- /*
+  schema.org Organization + WebSite for search engines — home page only. Built from hugo.toml,
+  data/services.yaml and the founder's profile.json. No address, phone or prices: none are published.
+  The Organization @id ("https://www.vangera.systems/#organization") is the one www.lohn.cc uses in
+  the founder's worksFor, and the founder @id ("https://www.lohn.cc/#person") is the Person described
+  on www.lohn.cc, so search engines join the two sites.
+  JSON-LD is a non-executable data block, so the CSP allows it.
+*/ -}}
+{{- $f := partial "founder.html" . -}}
+{{- $orgID := printf "%s#organization" site.BaseURL -}}
+{{- $offers := slice -}}
+{{- range hugo.Data.services -}}
+  {{- $offers = $offers | append (dict "@type" "Offer" "itemOffered" (dict "@type" "Service" "name" .title "description" .text)) -}}
+{{- end -}}
+{{- $founder := dict
+    "@type" "Person"
+    "@id" (printf "%s#person" $f.person.url)
+    "name" $f.person.name
+    "alternateName" $f.person.nickname
+    "url" $f.person.url
+-}}
+{{- with $f.person.linkedin }}{{ $founder = merge $founder (dict "sameAs" (slice .)) }}{{ end -}}
+{{- $org := dict
+    "@type" "Organization"
+    "@id" $orgID
+    "name" site.Title
+    "url" site.BaseURL
+    "logo" (dict "@type" "ImageObject" "url" ("favicon.svg" | absURL))
+    "description" site.Params.description
+    "email" site.Params.email
+    "areaServed" (dict "@type" "Country" "name" "Laos")
+    "founder" $founder
+    "knowsAbout" (apply hugo.Data.services "index" "." "title")
+    "hasOfferCatalog" (dict "@type" "OfferCatalog" "name" "IT services" "itemListElement" $offers)
+-}}
+{{- $graph := slice
+    $org
+    (dict
+      "@type" "WebSite"
+      "@id" (printf "%s#website" site.BaseURL)
+      "url" site.BaseURL
+      "name" site.Title
+      "inLanguage" site.Language.Locale
+      "publisher" (dict "@id" $orgID)
+    )
+-}}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}</script>

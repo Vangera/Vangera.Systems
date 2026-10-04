@@ -1,6 +1,7 @@
 ---
 title: "Privacy policy"
 description: "How Vangera Systems handles your data on this website."
+lastmod: 2026-10-02
 ---
 _Last updated: 2 October 2026_
 

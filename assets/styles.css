@@ -56,7 +56,7 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 18px/1.65 var(--sans); -webkit-font-smoothing: antialiased; }
 a { color: var(--link); text-underline-offset: 3px; }
 :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
-h1, h2, h3 { line-height: 1.2; text-wrap: balance; letter-spacing: -.015em; }
+h1, h2, h3, .card h4, .roles h4 { line-height: 1.2; text-wrap: balance; letter-spacing: -.015em; }
 
 .wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
 .skip { position: absolute; left: -999px; top: 8px; background: #fff; color: #000; padding: 8px 12px; z-index: 10; }
@@ -100,7 +100,7 @@ h1 { font-size: clamp(38px, 6.4vw, 72px); margin: 0 0 22px; max-width: 16ch; fon
 .alt { background: var(--alt); }
 .kicker { margin: 0 0 10px; color: var(--label); font-weight: 700; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
 h2 { font-size: clamp(28px, 3.6vw, 42px); margin: 0 0 36px; max-width: 24ch; font-weight: 720; }
-h3 { font-size: 19px; margin: 0 0 8px; font-weight: 650; }
+h3, .card h4, .roles h4 { font-size: 19px; margin: 0 0 8px; font-weight: 650; }
 .section-lede { color: var(--muted); max-width: 64ch; margin: -16px 0 28px; }
 
 .grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
@@ -111,7 +111,7 @@ h3 { font-size: 19px; margin: 0 0 8px; font-weight: 650; }
 
 .roles { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
 .roles li { background: var(--surface); box-shadow: var(--shadow); border: 1px solid var(--line); border-left: 4px solid var(--amber); border-radius: 12px; padding: 18px 20px; }
-.roles h3 { font-size: 17px; }
+.roles h4 { font-size: 17px; }
 .roles small { color: var(--muted); font-weight: 400; }
 .roles p { margin: 0; color: var(--muted); font-size: 15.5px; }
 .note { margin: 22px 0 0; color: var(--muted); font-size: 15px; }
