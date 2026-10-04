@@ -49,7 +49,7 @@
     <h3 class="tr-h">Selected work</h3>
     <ul class="grid">
       {{- range $f.projects }}
-      <li class="card"><p class="tr-tag">{{ .tag }}</p><h3>{{ .title }}</h3>{{ with .org }}<p class="tr-org">{{ . }}</p>{{ end }}<p>{{ .text }}</p></li>
+      <li class="card"><p class="tr-tag">{{ .tag }}</p><h4>{{ .title }}</h4>{{ with .org }}<p class="tr-org">{{ . }}</p>{{ end }}<p>{{ .text }}</p></li>
       {{- end }}
     </ul>
 
@@ -57,7 +57,7 @@
     <ul class="roles">
       {{- range where $f.positions "start_year" "ge" 2010 }}
       {{- if ne .org "Self-Employed" }}
-      <li><h3>{{ .org }}</h3><p>{{ .role }}<br><small>{{ .period }} · {{ .sector }}</small></p></li>
+      <li><h4>{{ .org }}</h4><p>{{ .role }}<br><small>{{ .period }} · {{ .sector }}</small></p></li>
       {{- end }}
       {{- end }}
     </ul>

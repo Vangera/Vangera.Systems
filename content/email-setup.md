@@ -1,6 +1,8 @@
 ---
 title: "Set up your email"
 description: "How to connect a mailbox hosted by Vangera Systems to Outlook, iPhone, Android, Thunderbird or webmail — settings, step-by-step guides and security tips."
+lastmod: 2026-10-03
+schema_type: "TechArticle"
 ---
 
 Your mailbox works with any modern email app. Most apps configure themselves when you enter your email address and password; if yours asks for settings, use the ones below.

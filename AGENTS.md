@@ -56,7 +56,10 @@ pricing or packages (if any), real client projects that may be named, years of e
 - CI builds with `hugo --gc --minify --panicOnWarning` — **any Hugo warning fails the deploy**.
 - Plain CSS in `assets/styles.css` (fingerprinted via `resources.Get`) with CSS custom properties; light + dark mode via `prefers-color-scheme`.
 - System font stacks only — **no web fonts, no Google Fonts, no external CDNs**.
-- **No ads, no affiliate links, no analytics or trackers** on this site. It's a professional services site.
+- **No ads shown, no affiliate links, no analytics or trackers** on this site. It's a professional services site.
+  `static/ads.txt` and the `google-adsense-account` verification `<meta>` (`params.adsenseClient`) only declare
+  the owner's AdSense publisher ID; they load nothing. Showing ads would need the owner's decision, a consent
+  banner, a Privacy update and a CSP change on the server — don't add ad code.
 
 ### Design system (UI refinement, Oct 2026)
 
@@ -98,6 +101,11 @@ This means:
 | Privacy policy | `content/privacy.md` |
 | Form result pages | `content/contact/thanks.md`, `content/contact/error.md` |
 | Page frame / head / header / footer | `layouts/baseof.html`, `layouts/_partials/*.html` |
+| Title, description, canonical, Open Graph tags | `layouts/_partials/head.html` |
+| Search-engine data: Organization + WebSite (home only) | `layouts/_partials/jsonld-org.html` |
+| Search-engine data: breadcrumbs, guides (`schema_type`) | `layouts/_partials/jsonld-page.html` |
+| robots.txt (sitemap is Hugo's built-in `/sitemap.xml`) | `layouts/robots.txt` |
+| AdSense seller declaration (no ads shown) | `static/ads.txt` |
 | Home page sections | `layouts/home.html` |
 | Styles | `assets/styles.css` — Hugo fingerprints it (`styles.<hash>.css`) so browsers never use a stale copy; never link it by a fixed URL |
 
@@ -107,6 +115,31 @@ Header, hero, contact and footer are always navy; content sections switch betwee
 
 Possible future pages (only when the owner asks): individual service pages (`content/services/<slug>.md`),
 case studies (only real, approved ones), a Lao-language version (Hugo multilingual).
+
+## 4a. SEO — keep these true
+
+**Structured data (JSON-LD)** is built from `hugo.toml`, `data/services.yaml` and the founder's profile.json —
+never type facts into it. Home: `Organization` (`#organization`: name, description, email, logo, area served Laos,
+founder, services as an `OfferCatalog`) and `WebSite`. No address, phone or prices until the owner publishes them.
+The founder is the `Person` with `@id` `https://www.lohn.cc/#person` — the same entity www.lohn.cc describes — and
+www.lohn.cc points back to `https://www.vangera.systems/#organization`; keep both @ids stable.
+Other pages get a `BreadcrumbList`; a guide gets `schema_type: "TechArticle"` in front matter.
+Check changes with Google's Rich Results Test and validator.schema.org.
+
+**Front matter for pages:** `seo_title` (shorter `<title>` if needed), `description`, `lastmod` (set when the page
+changes substantially — it feeds the sitemap), `schema_type`, and `robots: "noindex"` for pages that must stay out
+of search results (not a robots.txt `Disallow`, which would hide the noindex).
+
+**Checklist for every page**
+- [ ] `<title>` ≤ ~60 characters including " — Vangera Systems" (use `seo_title` otherwise); main words first.
+- [ ] `description` 120–160 characters: what the visitor gets, in plain words.
+- [ ] Exactly one `h1`, then `h2` for sections, `h3` inside them, `h4` inside those — never skip a level for
+  looks (style with CSS instead).
+- [ ] Open Graph title/description/URL and the Twitter card are automatic; there is no share image yet (needs a
+  1200×630 brand image from the owner).
+- [ ] Images: descriptive `alt`, width and height.
+- [ ] Meaningful link text; link services to the contact section.
+- [ ] Set `lastmod` after a substantial change.
 
 ## 4b. Founder data comes from lohn.cc — do not duplicate it
 

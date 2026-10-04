@@ -3,16 +3,32 @@
 {{- with resources.Get "js/site.js" | minify | fingerprint }}
 <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}
-{{- $title := cond .IsHome .Title (printf "%s — %s" .Title site.Title) }}
+{{- /* Title: optional shorter `seo_title` in front matter, so titles fit in search results (~60 chars). */}}
+{{- $title := .Params.seo_title | default .Title }}
+{{- if not .IsHome }}{{ $title = printf "%s — %s" $title site.Title }}{{ end }}
+{{- $desc := .Description | default site.Params.description }}
 <title>{{ $title }}</title>
-<meta name="description" content="{{ or .Description site.Params.description }}">
+<meta name="description" content="{{ $desc }}">
+{{- with .Params.robots }}
+<meta name="robots" content="{{ . }}">
+{{- end }}
 <link rel="canonical" href="{{ .Permalink }}">
-<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:type" content="{{ cond (isset .Params "schema_type") "article" "website" }}">
 <meta property="og:title" content="{{ $title }}">
-<meta property="og:description" content="{{ or .Description site.Params.description }}">
+<meta property="og:description" content="{{ $desc }}">
 <meta property="og:url" content="{{ .Permalink }}">
+<meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0b1530">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 {{- with resources.Get "styles.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{- end }}
+{{- with site.Params.adsenseClient }}
+<meta name="google-adsense-account" content="{{ . }}">
+{{- end }}
+{{- if .IsHome }}
+{{ partial "jsonld-org.html" . }}
+{{- else if and .IsPage (ne .Params.robots "noindex") }}
+{{ partial "jsonld-page.html" . }}
 {{- end }}

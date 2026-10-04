@@ -1,5 +1,6 @@
 ---
 title: "Vangera Systems — System Development, Administration & IT Management"
+seo_title: "Vangera Systems — Software Development & IT Services in Laos" # <title> in search results (≤60 chars)
 eyebrow: "Software house · System administration · IT management"
 heading: "Reliable IT, built and run for you."
 lede: "Vangera Systems designs, builds and maintains the systems your organisation depends on — from custom software and servers to networks, email and day-to-day IT operations. Backed by years of hands-on IT leadership in healthcare, hospitality, manufacturing and research."
