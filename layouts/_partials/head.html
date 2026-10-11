@@ -3,6 +3,10 @@
 {{- with resources.Get "js/site.js" | minify | fingerprint }}
 <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
 {{- end }}
+{{- /* Visit statistics: the script only asks; Google Analytics loads after "Allow" (see the footer). */}}
+{{- if site.Params.analytics.id }}{{ with resources.Get "js/stats.js" | minify | fingerprint }}
+<script defer src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{- end }}{{ end }}
 {{- /* Title: optional shorter `seo_title` in front matter, so titles fit in search results (~60 chars). */}}
 {{- $title := .Params.seo_title | default .Title }}
 {{- if not .IsHome }}{{ $title = printf "%s — %s" $title site.Title }}{{ end }}
@@ -21,6 +25,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0b1530">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 {{- with resources.Get "styles.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
 {{- end }}
