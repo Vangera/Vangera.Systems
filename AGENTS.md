@@ -156,7 +156,7 @@ The founder's CV lives only in the **lohn.cc** repo (`data/*.yaml`), published a
   add a silent fallback.
 - Remote fetches are restricted to `^https://www\.lohn\.cc/` (`[security.http]` in hugo.toml).
 - The workflow also rebuilds daily at 05:30 Laos time (cron) so CV updates appear without a push here.
-- Keep the note that listed organisations are past employers of the founder, not clients or endorsements.
+- Keep the note that listed organisations are where the founder has worked or volunteered, not clients or endorsements.
 - Local preview needs internet access (it fetches the live profile.json).
 
 ## 5. Contact form — do not break this contract

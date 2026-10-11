@@ -1,0 +1,44 @@
+{{- /* "Where the founder has worked": one card per organisation, newest first, from profile.json
+       positions + early_career (part-time work and volunteering). Each card lists its roles oldest → newest,
+       including a "Progressed from …" group.
+       Self-employment is left out. Returns []dict {org, roles, years, label}.
+       Usage: {{ range partial "founder-orgs.html" $f }} */ -}}
+{{- $monthNum := dict "Jan" 1 "Feb" 2 "Mar" 3 "Apr" 4 "May" 5 "Jun" 6 "Jul" 7 "Aug" 8 "Sep" 9 "Oct" 10 "Nov" 11 "Dec" 12 -}}
+{{- $entries := slice -}}
+{{- range .positions -}}
+  {{- if ne .org "Self-Employed" -}}
+    {{- $before := cond (hasPrefix .group "Progressed from ") (strings.TrimPrefix "Progressed from " .group) "" -}}
+    {{- $entries = $entries | append (dict "org" .org "role" .role "before" $before "period" .period "current" (.current | default false) "label" .sector) -}}
+  {{- end -}}
+{{- end -}}
+{{- range .early_career | default slice -}}
+  {{- $entries = $entries | append (dict "org" .org "role" .role "before" "" "period" .period "current" false "label" .kind) -}}
+{{- end -}}
+{{- $parsed := slice -}}
+{{- range $entries -}}
+  {{- $dates := findRE `(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}` .period -}}
+  {{- $s := index $dates 0 -}}
+  {{- $sy := int (substr $s 4) -}}
+  {{- $ey := $sy -}}
+  {{- if ge (len $dates) 2 }}{{ $ey = int (substr (index $dates 1) 4) }}{{ end -}}
+  {{- $parsed = $parsed | append (merge . (dict "start" (add (mul $sy 12) (index $monthNum (substr $s 0 3))) "sy" $sy "ey" $ey)) -}}
+{{- end -}}
+{{- $orgs := slice -}}
+{{- range sort $parsed "start" "desc" }}{{ if not (in $orgs .org) }}{{ $orgs = $orgs | append .org }}{{ end }}{{ end -}}
+{{- $cards := slice -}}
+{{- range $orgs -}}
+  {{- $rs := sort (where $parsed "org" .) "start" -}}
+  {{- $roles := slice -}}
+  {{- $from := (index $rs 0).sy -}}
+  {{- $to := $from -}}
+  {{- $present := false -}}
+  {{- range $rs -}}
+    {{- range slice .before .role }}{{ if and . (not (in $roles .)) }}{{ $roles = $roles | append . }}{{ end }}{{ end -}}
+    {{- if gt .ey $to }}{{ $to = .ey }}{{ end -}}
+    {{- if .current }}{{ $present = true }}{{ end -}}
+  {{- end -}}
+  {{- $years := cond $present (printf "%d – Present" $from) (cond (eq $from $to) (string $from) (printf "%d – %d" $from $to)) -}}
+  {{- $last := index $rs (sub (len $rs) 1) -}}
+  {{- $cards = $cards | append (dict "org" . "roles" (delimit $roles " → ") "years" $years "label" $last.label) -}}
+{{- end -}}
+{{- return $cards -}}
