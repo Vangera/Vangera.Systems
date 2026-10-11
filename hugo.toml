@@ -25,3 +25,8 @@ timeZone = "Asia/Vientiane"
 # Only allow remote fetches from the founder's site.
 [security.http]
   urls = ['^https://www\.lohn\.cc/']
+
+[params.analytics]
+  # Google Analytics 4, loaded only after the visitor allows it (footer bar, assets/js/stats.js).
+  # The server's Content-Security-Policy must allow Google Analytics too. Empty = off.
+  id = "G-NCZ31E7ZZJ"

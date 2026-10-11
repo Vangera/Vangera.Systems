@@ -70,22 +70,26 @@ pricing or packages (if any), real client projects that may be named, years of e
 - **Typography:** body 18px; no text smaller than 13px (13px only for short uppercase labels).
 - **Icons:** use `{{ partial "icon.html" "name" }}` (inline SVG, `currentColor`). No emoji as icons.
   Available: pin, mail, linkedin, arrow-right, external, sun, moon, menu, close, code, server, network, health, compass, check.
-- **JavaScript:** only `assets/js/site.js` (theme toggle + mobile menu), loaded fingerprinted in `<head>`. The site must still
-  work without it (links wrap on small screens, theme follows the device).
+- **JavaScript:** `assets/js/site.js` (theme toggle + mobile menu) and `assets/js/stats.js` (asks before loading Google
+  Analytics: the consent bar in `footer.html`, ID in `hugo.toml` → `[params.analytics]`), both loaded fingerprinted in `<head>`.
+  The site must still work without them (links wrap on small screens, theme follows the device; no statistics).
 - **Hierarchy:** at most one primary and one secondary button per section; tap targets ≥ 44px.
 
 ### Content Security Policy (enforced by the server — you cannot change it from this repo)
 
 ```
-default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self';
-object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'none'; upgrade-insecure-requests
+default-src 'self'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; style-src 'self';
+script-src 'self' https://*.googletagmanager.com;
+connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;
+font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'none'; upgrade-insecure-requests
 ```
 
 This means:
 - **No inline `<script>`** blocks or `onclick=` handlers. All JS goes in files under `static/js/`.
 - **No inline `style="…"` attributes** and no `<style>` blocks. All CSS goes in `assets/styles.css`.
   (Presentation attributes inside inline SVG, like `fill=`, are fine.)
-- **No external resources** (scripts, styles, fonts, images, iframes, maps, video embeds, chat widgets).
+- **No external resources** (scripts, styles, fonts, images, iframes, maps, video embeds, chat widgets). The one exception
+  is Google Analytics, approved by the owner on 12 October 2026: it loads only after the visitor allows it.
   Images must be committed to the repo (`static/images/`) — prefer WebP/AVIF/SVG, always set width/height and `alt`.
 - If a feature genuinely needs an external resource, **stop and tell the owner** — the CSP must be changed on the server first.
 

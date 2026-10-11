@@ -67,7 +67,7 @@ h1, h2, h3, .card h4, .roles h4 { line-height: 1.2; text-wrap: balance; letter-s
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-size: 18px; white-space: nowrap; }
 .brand b { color: var(--amber); font-weight: 700; }
-.logo { width: 32px; height: 32px; color: var(--amber); flex: none; }
+.logo { width: 34px; height: 34px; flex: none; }
 nav ul { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; overflow-x: auto; scrollbar-width: none; }
 nav a { display: block; padding: 7px 11px; border-radius: 8px; color: #c5cde3; text-decoration: none; font-size: 15px; white-space: nowrap; }
 nav a:hover { color: #fff; background: var(--navy-2); }
@@ -257,3 +257,20 @@ nav a { display: flex; align-items: center; }
 .prose h3 { margin: 1.6em 0 .4em; }
 .prose ol, .prose ul { padding-left: 1.3em; }
 .prose li { margin: .3em 0; }
+
+/* Visit statistics: asks before Google Analytics loads (assets/js/stats.js). */
+.consent {
+  position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 20;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
+  max-width: 760px; margin: 0 auto; padding: 14px 18px;
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--ink);
+  box-shadow: var(--shadow);
+}
+.consent[hidden] { display: none; }
+.consent p { flex: 1 1 260px; margin: 0; font-size: 16px; }
+.consent-actions { display: flex; gap: 10px; }
+.consent .btn { min-height: 44px; padding: 10px 18px; font: inherit; font-weight: 650; cursor: pointer; }
+.btn-quiet { background: none; color: var(--ink); border-color: var(--line); }
+.btn-quiet:hover { background: var(--alt); }
+.consent-open { white-space: nowrap; }
+.link-btn { padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }
