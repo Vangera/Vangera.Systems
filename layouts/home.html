@@ -55,10 +55,8 @@
 
     <h3 class="tr-h">Where the founder has worked</h3>
     <ul class="roles">
-      {{- range where $f.positions "start_year" "ge" 2010 }}
-      {{- if ne .org "Self-Employed" }}
-      <li><h4>{{ .org }}</h4><p>{{ .role }}<br><small>{{ .period }} · {{ .sector }}</small></p></li>
-      {{- end }}
+      {{- range partial "founder-orgs.html" $f }}
+      <li><h4>{{ .org }}</h4><p>{{ .roles }}<br><small>{{ .years }} · {{ .label }}</small></p></li>
       {{- end }}
     </ul>
 
@@ -73,7 +71,7 @@
     </ul>
     {{- end }}
 
-    <p class="note">Listed organisations are past employers of the founder, not clients or endorsements. Full CV: <a href="{{ $f.person.url }}">{{ strings.TrimSuffix "/" (strings.TrimPrefix "https://" $f.person.url) }}</a>.</p>
+    <p class="note">Listed organisations are where the founder has worked or volunteered, not clients or endorsements.{{ with $f.early_career }} In the early years, part-time jobs and volunteering often ran at the same time, so some periods overlap.{{ end }} Full CV: <a href="{{ $f.person.url }}">{{ strings.TrimSuffix "/" (strings.TrimPrefix "https://" $f.person.url) }}</a>.</p>
   </div>
 </section>
 
